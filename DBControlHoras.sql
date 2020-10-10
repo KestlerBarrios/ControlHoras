@@ -3,7 +3,7 @@ create database DBControlHoras;
 use DBControlHoras;
 
 Create Table Tipo_Actividad (
-	idTipo_Actividad int primary key auto_increment ,
+	idActividad int primary key auto_increment ,
     nombreActividad varchar(100)
 );
 
@@ -36,16 +36,17 @@ Create Table Control_Semanal(
 	cantidadHoras int,
     descripcion text,
     totalActividad decimal (5,2),
-    idTipo_Actividad int,
+    idActividad int,
     idColaborador int,
     idProyecto int,
     idHistorico_Salario int,
     constraint FK_IDColaborador foreign key (idColaborador) REFERENCES Usuario(idColaborador),
-    constraint FK_ID_TipoActividad foreign key (idTipo_Actividad) REFERENCES Tipo_Actividad(idTipo_Actividad),
+    constraint FK_ID_Actividad foreign key (idActividad) REFERENCES Tipo_Actividad(idActividad),
     constraint FK_ID_idProyecto foreign key (idProyecto) REFERENCES Proyecto(idProyecto),
     constraint FK_ID_idHistorico_Salario foreign key (idHistorico_Salario) REFERENCES Historico_Salarios(idHistorico_Salario)
 );
-/*
+
+
 																			-- Procedimientos almacenados de Usuarios
 
 delimiter //
@@ -126,42 +127,121 @@ BEGIN
 	Select	*From Historico_Salarios;
 END; 
 //
-*/
+
 																			-- Procedimientos almacenados de Actividades--
 Delimiter //
-create procedure sp_AgregarActividad ()
+create procedure sp_AgregarActividad (IN actividad varchar(150))
 BEGIN
-	Insert Into Tipo_Actividad()
-    Values();
+	Insert Into Tipo_Actividad(nombreActividad)
+		Values(actividad);
 END; 
 //
 
 Delimiter //
-create procedure sp_EliminarActividad ()
+create procedure sp_EliminarActividad (IN id int)
 BEGIN
-	Select	*From Historico_Salarios;
+	Delete From Tipo_Actividad where idActividad = id;
 END; 
 //
 
 Delimiter //
-create procedure sp_EditarActividad ()
+create procedure sp_EditarActividad (IN id int, IN actividad varchar(150))
 BEGIN
-	Select	*From Historico_Salarios;
+	Update	Tipo_Actividad set nombreActividad = actividad where idActividad = id;
 END; 
 //
 
 Delimiter //
-create procedure sp_BuscarActividad ()
+create procedure sp_BuscarActividad (IN id int)
 BEGIN
-	Select	*From Historico_Salarios;
+	Select	*From Tipo_Actividad where idActividad = id;
 END; 
 //
 
 Delimiter //
-create procedure sp_ListarActividad ()
+create procedure sp_ListarActividades ()
 BEGIN
-	Select	*From Historico_Salarios;
+	Select	*From Tipo_Actividad;
 END; 
 //
-																			/* Procedimientos almacenados de Proyectos*/
-																			/* Procedimientos almacenados de Control Semanal*/
+
+																			-- Procedimientos almacenados de Proyectos
+Delimiter //
+create procedure sp_AgregarProyecto (IN proyecto varchar(150))
+BEGIN
+	Insert Into Tipo_Actividad(nombreProyecto)
+		Values(proyecto);
+END; 
+//
+
+Delimiter //
+create procedure sp_EliminarProyecto (IN id int)
+BEGIN
+	Delete From Proyecto where idProyecto = id;
+END; 
+//
+
+Delimiter //
+create procedure sp_EditarProyecto (IN id int, IN proyecto varchar(150))
+BEGIN
+	Update	Proyecto set nombreProyecto = proyecto where idProyecto = id;
+END; 
+//
+
+Delimiter //
+create procedure sp_BuscarProyecto (IN id int)
+BEGIN
+	Select	*From Proyecto where idProyecto= id;
+END; 
+//
+
+Delimiter //
+create procedure sp_ListarProyectos ()
+BEGIN
+	Select	*From Proyecto;
+END; 
+//
+
+																			-- Procedimientos almacenados de Control Semanal
+Delimiter //
+create procedure sp_AgregarControlSemanal (IN fecha datetime, IN horas int, IN descripcion text, IN actividad int, IN colaborador int, IN proyecto int)
+BEGIN
+	Insert Into Control_Semanal (fechaRegistro, cantidadHoras, descripcion, idActividad, idColaborador, idProyecto)
+		Values(fecha, horas, descripcion, actividad, colaborador, proyecto);
+END; 
+//
+
+Delimiter //
+create procedure sp_EliminarControlSemanal (IN id int)
+BEGIN
+	Delete From Control_Semanal where idControl_Semanal = id;
+END; 
+//
+
+Delimiter //
+create procedure sp_EditarControlSemanal (IN id int, IN fecha datetime, IN horas int, IN descripcion text, IN actividad int, IN colaborador int, IN proyecto int, IN salario int)
+BEGIN
+	Update	Control_Semanal set fechaRegistro = proyecto, 
+								cantidadHoras = horas,
+                                descripcion = descripcion,
+                                idActividad = actividad,
+                                idColaborador = colaborador,
+                                idProyecto = proyecto
+                                where idControlSemanal = id;
+END; 
+//
+
+Delimiter //
+create procedure sp_BuscarControlSemanal (IN id int)
+BEGIN
+	Select	*From Control_Semanal where idControl_Semanal = id;
+END; 
+//
+
+Delimiter //
+create procedure sp_ListarControlSemanal ()
+BEGIN
+	Select	*From Control_Semanal;
+END; 
+//
+                                                                            
