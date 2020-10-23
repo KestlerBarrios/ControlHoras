@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "zcZ3ip8aBEXnqQb7TymE48pKnxqJd6VU88nC3Zs9WvI67yM+jDyUeroau/xRqGOLsHbE3Tu/CLt3LffCJO9rew==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\C#\\ControlHoras\\ControlDeHoras\\ControlDeHoras.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Kestler Barrios\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\Kestler Barrios\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}
