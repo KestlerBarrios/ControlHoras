@@ -23,9 +23,9 @@ Create Table Usuario(
 
 Create Table Historico_Salarios(
 	idHistorico_Salario int primary key auto_increment,
-    salario decimal(5,2),
+    salario decimal(7,2),
     fecha date,
-    costoHora decimal(3,2),
+    costoHora decimal(5,2),
     idColaborador int,
     constraint FK_ID_Colaborador foreign key (idColaborador) REFERENCES Usuario(idColaborador)
 );
@@ -54,8 +54,7 @@ create procedure sp_AgregarUsuario (IN id int, IN nombre varchar(150), IN email 
 BEGIN
 	Insert into Usuario (idColaborador, nombreColaborador, correo, telefono, direccion, edad)
 		Values(id, nombre, email, tel, direccion, edad);
-END; 
-//
+END; //
 
 delimiter //
 create procedure sp_EliminarUsuario (IN id int)
@@ -93,10 +92,12 @@ END;
 																			-- Procedimientos almacenados de Salarios
 
 Delimiter //
-create procedure sp_AgregarSalario (IN sueldo decimal(5,2), IN fecha date, IN costoHora decimal(3,2), IN colaborador int)
+create procedure sp_AgregarSalario (IN sueldo decimal (7,2), IN fecha date, IN colaborador int)
 BEGIN
+	declare costo int;
+    set costo = sueldo/30/8;
 	Insert Into Historico_Salarios (salario, fecha, costoHora, idColaborador)
-		Values	(sueldo, fecha, costo,colaborador);
+		Values	(sueldo, fecha, costo, colaborador);
 END; 
 //
 
@@ -108,7 +109,7 @@ END;
 //
 
 Delimiter //
-create procedure sp_EditarSalario (IN salario decimal(5,2), IN fecha date, IN costoHora decimal, IN idColaborador int)
+create procedure sp_EditarSalario (IN salario decimal(7,2), IN fecha date, IN costoHora decimal, IN idColaborador int)
 BEGIN
 	Select	*From Usuario;
 END; 
@@ -244,4 +245,9 @@ BEGIN
 	Select	*From Control_Semanal;
 END; 
 //
+
+call sp_AgregarUsuario(2456, "Juanito","Juanito123",23456788,"Ciudad",16);
+Call sp_ListarUsuarios();
+Call sp_AgregarSalario(30000.50,25/7/2020,2456);
+call sp_ListarSalarios
                                                                             
